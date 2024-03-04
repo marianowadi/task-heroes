@@ -1,4 +1,5 @@
-import React, { useReducer, useState } from 'react'
+import React, { useEffect, useReducer, useState } from 'react'
+import { FaRegTrashAlt } from 'react-icons/fa'
 import { v4 as uuidv4 } from 'uuid'
 
 type Task = {
@@ -6,6 +7,7 @@ type Task = {
   description: string
   done: boolean
   createdAt?: Date
+  deadline?: Date
 }
 
 type State = { tasks: Task[] }
@@ -65,17 +67,17 @@ function appReducer(state: State, action: Action): State {
 }
 
 function App() {
-  const [state, dispatch] = useReducer(appReducer, {
-    tasks: [
-      {
-        uuid: uuidv4(),
-        done: false,
-        description: 'Test task'
-      }
-    ]
-  })
+  const [state, dispatch] = useReducer(appReducer, { tasks: [] }, init)
   const [newTask, setNewTask] = useState<string>('')
-  const [activeTask, setActiveTask] = useState<string | null>()
+
+  function init() {
+    return { tasks: JSON.parse(localStorage.getItem('tasks') ?? '[]') }
+  }
+
+  useEffect(() => {
+    if (JSON.stringify(state.tasks) !== localStorage.getItem('tasks') ?? '[]')
+      localStorage.setItem('tasks', JSON.stringify(state.tasks))
+  }, [state])
 
   function updateStatus(status: boolean, index: number) {
     dispatch({
@@ -96,15 +98,19 @@ function App() {
     })
   }
 
-  function handleAddTask(e: React.KeyboardEvent<HTMLInputElement>) {
+  function handleAddTask(description: string) {
+    dispatch({
+      payload: {
+        type: 'add',
+        description
+      }
+    })
+    setNewTask('')
+  }
+
+  function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
     if (e.key === 'Enter') {
-      dispatch({
-        payload: {
-          type: 'add',
-          description: e.currentTarget.value
-        }
-      })
-      setNewTask('')
+      handleAddTask(e.currentTarget.value)
     }
   }
 
@@ -121,38 +127,41 @@ function App() {
           value={newTask}
           onChange={(e) => setNewTask(e.currentTarget.value)}
           placeholder="My new task"
-          onKeyDown={(e) => handleAddTask(e)}
+          onKeyDown={(e) => handleKeyDown(e)}
         />
-        <button className="ml-6 rounded-md bg-brand-green p-2">Add</button>
+        <button
+          className="ml-6 rounded-md bg-brand-green p-2"
+          onClick={() => handleAddTask(newTask)}
+        >
+          Add
+        </button>
       </div>
-      <div className="flex size-2/5  flex-col rounded-lg border bg-brand-yellow p-6">
+      <div className="flex size-2/5  flex-col rounded-lg border  p-6">
         {state.tasks?.map((task, index) => (
           <div
             key={task.uuid}
-            className=" flex h-1/5 flex-row  items-center text-lg"
-            onMouseOver={() => setActiveTask(task.uuid)}
-            onMouseLeave={() => setActiveTask(null)}
+            className=" flex flex-row  items-center justify-between p-4 text-lg"
           >
-            <input
-              type="checkbox"
-              className="mr-2"
-              checked={task.done}
-              onClick={() => updateStatus(!task.done, index)}
-            />
-            <h2
-              key={task.uuid}
-              className={`${task.done ? 'line-through opacity-50 ' : ''}`}
-            >
-              {task.description}
-            </h2>
-            {activeTask === task.uuid && (
-              <button
-                className="ml-4 rounded-md bg-brand-red p-1 text-white"
-                onClick={() => handleDeleteTask(index)}
+            <div className="flex flex-row items-center">
+              <input
+                type="checkbox"
+                className="mr-2 size-5"
+                checked={task.done}
+                onChange={() => updateStatus(!task.done, index)}
+              />
+              <h2
+                key={task.uuid}
+                className={`${task.done ? 'line-through opacity-50 ' : ''}`}
               >
-                Delete
-              </button>
-            )}
+                {task.description}
+              </h2>
+            </div>
+            <button
+              className="ml-4 rounded-md p-1 "
+              onClick={() => handleDeleteTask(index)}
+            >
+              <FaRegTrashAlt />
+            </button>
           </div>
         ))}
       </div>
