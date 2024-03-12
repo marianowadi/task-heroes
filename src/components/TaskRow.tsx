@@ -1,8 +1,13 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faXmark } from '@fortawesome/free-solid-svg-icons'
+import {
+  faXmark,
+  faTriangleExclamation,
+  faHeartCircleMinus
+} from '@fortawesome/free-solid-svg-icons'
 import { default as dayjs } from 'dayjs'
 import { default as relativeTime } from 'dayjs/plugin/relativeTime'
 import { Task } from 'types'
+import { getDiff } from 'utils'
 
 dayjs.extend(relativeTime)
 type TaskRowProps = {
@@ -18,6 +23,9 @@ export const TaskRow = ({
   onTaskDeleteHandler,
   onStatusChangeHandler
 }: TaskRowProps) => {
+  const timeDiff = getDiff(task.deadline)
+  const dueToday = timeDiff <= 24
+  const overdue = timeDiff > -1
   return (
     <div
       key={task.uuid}
@@ -36,8 +44,26 @@ export const TaskRow = ({
           {task.description}
         </h2>
       </div>
-      {task.deadline && (
-        <h3 className=" text-xl">{dayjs().to(task.deadline)}</h3>
+      {task.deadline && !overdue && (
+        <h3 className=" text-xl">
+          {dayjs().to(task.deadline)}
+          {dueToday && (
+            <FontAwesomeIcon
+              className="ml-2"
+              icon={faTriangleExclamation}
+              title="Due today!"
+            />
+          )}
+        </h3>
+      )}
+      {task.deadline && overdue && (
+        <h3 className=" text-xl">
+          Overdue
+          <FontAwesomeIcon
+            className="ml-2  text-brand-red"
+            icon={faHeartCircleMinus}
+          />
+        </h3>
       )}
       <button
         className="ml-4 rounded-md p-1 "

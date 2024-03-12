@@ -4,9 +4,20 @@ export type Task = {
   done: boolean
   createdAt?: Date
   deadline?: string
+  penalized: boolean
 }
 
-export type State = { tasks: Task[] }
+export type Stats = {
+  currentLevel: number
+  currentExperience: number
+  currentHealthPoints: number
+  totalHealthPoints: number
+}
+
+export type State = {
+  tasks: Task[]
+  stats: Stats
+}
 export type CreateActionPayload = {
   type: 'add'
   description: string
@@ -23,5 +34,9 @@ export type UpdateActionPayload = {
   index: number
 }
 export type Action = {
-  payload: CreateActionPayload | UpdateActionPayload | DeleteActionPayload
+  payload:
+    | CreateActionPayload
+    | UpdateActionPayload
+    | DeleteActionPayload
+    | { type: 'recalculate' }
 }
