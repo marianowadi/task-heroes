@@ -10,6 +10,7 @@ export type Task = {
 export type Stats = {
   currentLevel: number
   currentExperience: number
+  totalExperience: number
   currentHealthPoints: number
   totalHealthPoints: number
 }

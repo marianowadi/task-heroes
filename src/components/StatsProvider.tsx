@@ -19,6 +19,7 @@ const defaulStats: Stats = {
   currentHealthPoints: 50,
   currentLevel: 1,
   currentExperience: 0,
+  totalExperience: 10,
   totalHealthPoints: 50
 }
 
@@ -85,14 +86,24 @@ function appReducer(state: State, action: Action): State {
         ...task,
         done: done ?? false
       })
+
+      const newExperienceValue = done
+        ? state.stats.currentExperience + 3
+        : state.stats.currentExperience
+      const isLevelUp = newExperienceValue >= state.stats.totalExperience
       return {
         ...state,
         tasks: [...values],
         stats: {
           ...state.stats,
-          currentExperience: done
-            ? state.stats.currentExperience + 3
-            : state.stats.currentExperience
+          currentExperience: newExperienceValue,
+          currentLevel: isLevelUp
+            ? state.stats.currentLevel + 1
+            : state.stats.currentLevel,
+          totalExperience:
+            state.stats.currentLevel === 1
+              ? 10
+              : state.stats.currentLevel * 10 * 1.6
         }
       }
     }

@@ -2,7 +2,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faXmark,
   faTriangleExclamation,
-  faHeartCircleMinus
+  faHeartCircleMinus,
+  faClock
 } from '@fortawesome/free-solid-svg-icons'
 import { default as dayjs } from 'dayjs'
 import { default as relativeTime } from 'dayjs/plugin/relativeTime'
@@ -25,16 +26,16 @@ export const TaskRow = ({
 }: TaskRowProps) => {
   const timeDiff = getDiff(task.deadline)
   const dueToday = timeDiff <= 24
-  const overdue = timeDiff > -1
+  const overdue = timeDiff <= -1
   return (
     <div
       key={task.uuid}
-      className=" flex flex-row  items-center justify-between p-4 text-lg"
+      className=" my-1 flex flex-row items-center justify-between  border-2 border-dashed p-4 text-lg"
     >
-      <div className="flex flex-row items-center">
+      <div className="flex basis-1/3 flex-row items-center">
         <input
           type="checkbox"
-          className="mr-2 size-5"
+          className="mr-2 size-5 appearance-none  border-2 border-dashed bg-brand-yellow checked:border-0 checked:bg-black"
           checked={task.done}
           onChange={() => onStatusChangeHandler(!task.done, index)}
         />
@@ -44,27 +45,24 @@ export const TaskRow = ({
           {task.description}
         </h2>
       </div>
-      {task.deadline && !overdue && (
-        <h3 className=" text-xl">
-          {dayjs().to(task.deadline)}
-          {dueToday && (
+      {task.deadline && (
+        <div className="flex flex-row items-center justify-center">
+          {overdue ? (
+            <FontAwesomeIcon
+              className="ml-2 text-brand-red"
+              title="Overdue"
+              icon={faHeartCircleMinus}
+            />
+          ) : (
             <FontAwesomeIcon
               className="ml-2"
-              icon={faTriangleExclamation}
-              title="Due today!"
+              icon={dueToday ? faTriangleExclamation : faClock}
+              title={`due ${dayjs().to(task.deadline)}`}
             />
           )}
-        </h3>
+        </div>
       )}
-      {task.deadline && overdue && (
-        <h3 className=" text-xl">
-          Overdue
-          <FontAwesomeIcon
-            className="ml-2  text-brand-red"
-            icon={faHeartCircleMinus}
-          />
-        </h3>
-      )}
+
       <button
         className="ml-4 rounded-md p-1 "
         onClick={() => onTaskDeleteHandler(index)}

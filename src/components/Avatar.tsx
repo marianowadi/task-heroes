@@ -17,7 +17,7 @@ export const Avatar = () => {
     <div className="my-4 ml-auto mr-4 flex flex-row items-center rounded-lg border-2 border-dashed p-12">
       <FontAwesomeIcon className="text-5xl" icon={faUserLarge} />
       <div className="mx-2 self-baseline">
-        <h2>Wadi lvl {state.stats.currentLevel}</h2>
+        <h2>lvl {state.stats.currentLevel}</h2>
       </div>
 
       <div className="ml-2 flex w-28 flex-row items-center justify-between rounded-lg border-2  border-dashed px-3 py-1">

@@ -5,5 +5,5 @@ export function classNames(...classes: unknown[]): string {
 }
 
 export function getDiff(date: string | undefined) {
-  return date ? dayjs().diff(dayjs(date, 'hour')) : 0
+  return date ? dayjs(date).diff(dayjs(), 'hour') : 0
 }
