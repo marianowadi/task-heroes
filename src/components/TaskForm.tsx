@@ -1,13 +1,19 @@
 import { useState } from 'react'
+import { default as dayjs } from 'dayjs'
 import { useTasks } from './StatsProvider'
+
+type NewTask = {
+  description: string
+  deadline: string | undefined
+}
 
 export const TaskForm = () => {
   const { dispatch } = useTasks()
 
-  const [newTask, setNewTask] = useState<{
-    description: string
-    deadline: string | undefined
-  }>({ description: '', deadline: undefined })
+  const [newTask, setNewTask] = useState<NewTask>({
+    description: '',
+    deadline: undefined
+  })
 
   function handleAddTask() {
     dispatch({
@@ -18,6 +24,17 @@ export const TaskForm = () => {
       }
     })
     setNewTask({ description: '', deadline: undefined })
+  }
+
+  function handleDeadlineChange(date: string) {
+    const parsedDate = date.split('T')
+    setNewTask((prev) => ({
+      ...prev,
+      deadline: dayjs(
+        `${parsedDate[0]} ${parsedDate[1]}`,
+        'YYYY-MM-DD HH:mm'
+      ).toISOString()
+    }))
   }
 
   function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
@@ -50,16 +67,13 @@ export const TaskForm = () => {
           type="datetime-local"
           id="duedate"
           step={600}
-          onChange={(e) =>
-            setNewTask((prev) => ({
-              ...prev,
-              deadline: e.target.value
-            }))
-          }
+          onChange={(e) => {
+            handleDeadlineChange(e.target.value)
+          }}
         />
       </div>
       <button
-        className="rounded-md bg-brand-green px-6 py-2"
+        className="rounded-md border-2 border-dashed  px-6 py-2 hover:bg-black hover:text-white"
         onClick={() => handleAddTask()}
       >
         Add

@@ -26,7 +26,11 @@ export const TaskList = () => {
   }
 
   return (
-    <div className="flex h-2/5 w-3/5  flex-col overflow-y-auto text-clip rounded-lg border-2  border-dashed  p-6 ">
+    <div
+      className=" flex  h-2/5 w-3/5 flex-col overflow-x-hidden text-clip  rounded-lg  border-2 border-dashed
+    p-6
+    [&::-webkit-scrollbar-thumb]:bg-[#e0d0d0] [&::-webkit-scrollbar]:bg-black [&::-webkit-scrollbar]:[margin:8px] [&::-webkit-scrollbar]:[width:8px]"
+    >
       {state.tasks.length ? (
         state.tasks.map((task, index) => (
           <TaskRow

@@ -8,9 +8,6 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useTasks } from './StatsProvider'
 
-const getExp = (currentLevel: number) =>
-  currentLevel === 1 ? 10 : currentLevel * 10 * 1.6
-
 export const Avatar = () => {
   const { state } = useTasks()
   return (
@@ -33,7 +30,7 @@ export const Avatar = () => {
           <FontAwesomeIcon className="text-sm" icon={faX} />
           <FontAwesomeIcon className="text-sm" icon={faP} />
         </div>
-        {state.stats.currentExperience}/{getExp(state.stats.currentLevel)}
+        {state.stats.currentExperience}/{state.stats.totalExperience}
       </div>
     </div>
   )
