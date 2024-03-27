@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { default as dayjs } from 'dayjs'
 import { useTasks } from './StatsProvider'
 
 type NewTask = {
@@ -23,18 +22,7 @@ export const TaskForm = () => {
         deadline: newTask.deadline
       }
     })
-    setNewTask({ description: '', deadline: undefined })
-  }
-
-  function handleDeadlineChange(date: string) {
-    const parsedDate = date.split('T')
-    setNewTask((prev) => ({
-      ...prev,
-      deadline: dayjs(
-        `${parsedDate[0]} ${parsedDate[1]}`,
-        'YYYY-MM-DD HH:mm'
-      ).toISOString()
-    }))
+    setNewTask({ description: '', deadline: '' })
   }
 
   function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
@@ -66,10 +54,10 @@ export const TaskForm = () => {
           className="ml-2 rounded-lg border-2 border-dashed bg-brand-yellow p-2"
           type="datetime-local"
           id="duedate"
-          step={600}
-          onChange={(e) => {
-            handleDeadlineChange(e.target.value)
-          }}
+          value={newTask.deadline}
+          onChange={(e) =>
+            setNewTask((prev) => ({ ...prev, deadline: e.target.value }))
+          }
         />
       </div>
       <button
