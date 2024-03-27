@@ -4,6 +4,7 @@ import { Navbar } from './Navbar'
 import { TasksProvider } from './StatsProvider'
 import { TaskList } from './TaskList'
 import { TaskForm } from './TaskForm'
+import { Footer } from './Footer'
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Navbar />
         <TaskForm />
         <TaskList />
+        <Footer />
       </div>
     </TasksProvider>
   )
