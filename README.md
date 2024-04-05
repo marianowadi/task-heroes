@@ -10,7 +10,7 @@
   </a>
 
   <p align="center">
-    Gamified todo app, earn experience with each task you complete, loose HP when you miss a deadline!
+    Gamified todo app!
     <br />
   </p>
 </div>
@@ -34,9 +34,9 @@
 
 ## About The Project
 
-    <img src="public/demo.gif" alt="Demo" width="auto" height="800">
+<img src="public/demo.gif" alt="Demo" width="auto" height="800">
 
-Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `github_username`, `repo_name`, `twitter_handle`, `linkedin_username`, `email_client`, `email`, `project_title`, `project_description`
+Gamified todo app, earn experience with each task you complete, loose HP when you miss a deadline!
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
