@@ -34,7 +34,7 @@
 
 ## About The Project
 
-<img src="public/demo.gif" alt="Demo" width="auto" height="800">
+<img src="public/demo.gif" alt="Demo" width="auto" height="400">
 
 Gamified todo app, earn experience with each task you complete, loose HP when you miss a deadline!
 
@@ -43,7 +43,9 @@ Gamified todo app, earn experience with each task you complete, loose HP when yo
 ### Built With
 
 [![React][React.js]][React-url]
-[![Tailwind][React.js]][React-url]
+[![TypeScript][Typescript]][Typescript-url]
+[![Vite][Vite.js]][Vite-url]
+[![Tailwind][Tailwindcss]][Tailwind-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -66,14 +68,18 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 ## Contact
 
-Wadi - [@twitter_handle](https://twitter.com/marianowadi)
-
-Project Link: [https://github.com/marianowadi/task-heroes](https://github.com/marianowadi/task-heroes)
+Wadi - [@marianowadi](https://twitter.com/marianowadi)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-[license-shield]: https://img.shields.io/github/license/github_username/repo_name.svg?style=for-the-badge
-[license-url]: https://github.com/github_username/repo_name/blob/master/LICENSE.txt
+[license-shield]: https://img.shields.io/badge/License-MIT-yellow.svg
+[license-url]: https://github.com/marianowadi/task-heroes/blob/master/LICENSE
 [product-screenshot]: images/screenshot.png
-[React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
+[React.js]: https://img.shields.io/badge/React-blue?logo=react&logoColor=61DAFB
 [React-url]: https://reactjs.org/
+[Vite-url]: https://vitejs.dev/
+[Tailwind-url]: https://tailwindcss.com/
+[Typescript-url]: https://www.typescriptlang.org/
+[Typescript]: https://img.shields.io/badge/TypeScript-%23007ACC.svg?logo=typescript&logoColor=white
+[Vite.js]: https://img.shields.io/badge/Vite-%23646CFF.svg?logo=vite&logoColor=white
+[Tailwindcss]: https://img.shields.io/badge/tailwindcss-0F172A?&logo=tailwindcss
